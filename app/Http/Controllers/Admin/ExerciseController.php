@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exercise;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -24,8 +25,9 @@ class ExerciseController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
         $exercise = new Exercise();
-        return view("admin.exercises.create", compact("exercise", "types"));
+        return view("admin.exercises.create", compact("exercise", "types", "technologies"));
     }
 
     /**
@@ -39,7 +41,8 @@ class ExerciseController extends Controller
             "exercise_completed" => ["required", "boolean", "numeric"],
             "exercise_bonus" => ["required", "boolean", "numeric"],
             "date" => ["required", "date"],
-            "type_id" => ["required", "numeric", "integer", "exists:types,id"]
+            "type_id" => ["required", "numeric", "integer", "exists:types,id"],
+            "technologies" => ["required", "array", "exists:technologies,id"]
         ]);
 
         // $exerciseData = $request->all();
@@ -71,8 +74,9 @@ class ExerciseController extends Controller
     public function edit(string $id)
     {
         $types = Type::all();
+        $technologies = Technology::all();
         $exercise = Exercise::findOrFail($id);
-        return view("admin.exercises.edit", compact("exercise", "types"));
+        return view("admin.exercises.edit", compact("exercise", "types", "technologies"));
     }
 
     /**
@@ -87,10 +91,12 @@ class ExerciseController extends Controller
             "exercise_bonus" => ["required", "boolean", "numeric"],
             "date" => ["required", "date"],
             "type_id" => ["required", "numeric", "integer", "exists:types,id"]
+            //"technologies" => ["required", "array", "exists:technologies,id"]
         ]);
 
         $exercise = Exercise::findOrFail($id);
         $exercise->type_id = $exerciseData["type_id"];
+        //$exercise->technologies = $exerciseData["technologies"];
         $exercise->exercise_name = $exerciseData["exercise_name"];
         $exercise->repo_name = $exerciseData["repo_name"];
         $exercise->exercise_completed = $exerciseData["exercise_completed"];
