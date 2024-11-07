@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('exercise_technology', function (Blueprint $table) {
             // $table->id();
-            $table->foreignId("exercise_id")->constrained();
+            $table->unsignedBigInteger("exercise_id");
+            $table->foreign("exercise_id")->references("id")->on("exercises");
 
-            $table->foreignId("technology_id")->constrained();
+            $table->unsignedBigInteger("technology_id");
+            $table->foreign("technology_id")->references("id")->on("technologies");
 
             $table->primary(["exercise_id", "technology_id"]);
 
