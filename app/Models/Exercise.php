@@ -19,6 +19,6 @@ class Exercise extends Model
     }
 
     public function technologies() {
-        return $this->belongsTo(Technology::class);
+        return $this->belongsToMany(Technology::class);
     }
 }

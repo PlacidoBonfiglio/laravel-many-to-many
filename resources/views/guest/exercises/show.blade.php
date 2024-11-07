@@ -18,6 +18,12 @@
                 <span class="fw-bold">Tipologia: </span>{{$exercise->type->name}}
             </p>
             <p>
+                <span class="fw-bold">Tecnologia: </span>
+                @foreach ( $exercise->technologies as $technology )
+                    <span>{{ $technology->name }} </span>
+                @endforeach
+            </p>
+            <p>
                 <span class="fw-bold">Esercizio completato: </span>{{$exercise->exercise_completed}}
             </p>
             <p>
