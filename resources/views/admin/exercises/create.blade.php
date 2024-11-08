@@ -46,7 +46,9 @@
                         <label class="form-check-label" for="exercise-technologies" name="technologies[]">{{ $technology->name }}</label>
                     </div>
                 @endforeach
-                <input class="form-check-input" type="checkbox" value="" id="exercise-technologies" name="technologies[]">
+                @error("exercise-technologies")
+                    <div class="alert alert-warning mt-2">Seleziona almeno una tecnologia utilizzata.</div>
+                @enderror
             </div>
 
             <div class="col-6 m-3">
