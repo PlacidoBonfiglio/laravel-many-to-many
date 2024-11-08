@@ -40,6 +40,18 @@
             </div>
 
             <div class="col-6 m-3">
+                <label class="form-label" for="exercise-technologies">Technologie utilizzate</label>
+                @foreach ( $technologies as $technology )
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ $technology->id }}" id="exercise-technologies" name="technologies[]"
+                        @if ( $exercise->technologies->contains( $technology )) checked @endif>
+                        <label class="form-check-label" for="exercise-technologies" name="technologies[]">{{ $technology->name }}</label>
+                    </div>
+                @endforeach
+                <input class="form-check-input" type="checkbox" value="" id="exercise-technologies" name="technologies[]">
+            </div>
+
+            <div class="col-6 m-3">
                 <label for="exercise-completed">L'esercizio è stato completato?</label>
                 <input class="form-control" type="number" min="0" max="1" value="{{ old('exercise_completed', $exercise->exercise_completed) }}" id="exercise-completed" name="exercise_completed">
                 @error("exercise_completed")

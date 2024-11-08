@@ -56,6 +56,9 @@ class ExerciseController extends Controller
         // $exercise->save();
 
         $exercise = Exercise::create($exerciseData);
+
+        $exercise->technologies()->sync($exerciseData["technologies"]);
+
         return redirect()->route("admin.exercises.index");
     }
 
@@ -90,13 +93,17 @@ class ExerciseController extends Controller
             "exercise_completed" => ["required", "boolean", "numeric"],
             "exercise_bonus" => ["required", "boolean", "numeric"],
             "date" => ["required", "date"],
-            "type_id" => ["required", "numeric", "integer", "exists:types,id"]
-            //"technologies" => ["required", "array", "exists:technologies,id"]
+            "type_id" => ["required", "numeric", "integer", "exists:types,id"],
+            "technologies" => ["required", "array", "exists:technologies,id"],
         ]);
 
         $exercise = Exercise::findOrFail($id);
         $exercise->type_id = $exerciseData["type_id"];
-        //$exercise->technologies = $exerciseData["technologies"];
+
+        //if (count($exerciseData["technologies"]) > 0) {  Se non voglio metterlo come parametro required uso un if
+            $exercise->technologies()->sync($exerciseData["technologies"]);
+        //}
+
         $exercise->exercise_name = $exerciseData["exercise_name"];
         $exercise->repo_name = $exerciseData["repo_name"];
         $exercise->exercise_completed = $exerciseData["exercise_completed"];
